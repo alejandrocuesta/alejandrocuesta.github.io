@@ -1,0 +1,92 @@
+<html lang="es">
+    <head>
+      <title>Ejemplo 2 Leaflet provider</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="author" content="autor" />
+      <meta name="description" content="descripción página">
+      <meta name="robots" content="index,follow">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.0/leaflet.css" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script>
+            L_PREFER_CANVAS = true;
+          </script>
+    
+      <style>
+        body {
+          margin: 0;
+        }
+        #map{
+          height: 100%;
+          width: 100%;
+          background-color: #ffffff
+        }
+      </style>
+     
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.0/leaflet.js"></script>
+      <script>
+        var map, osm, controlCapas;
+        function init() {
+            map = L.map('map', {
+            center: [41.435, 2.10],
+            zoom: 13
+        });
+        osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            minZoom: 1,
+            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        })
+        .addTo(map);
+        var Hydda_Base = 
+            L.tileLayer('http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
+            minZoom: 0,
+            maxZoom: 18,
+            attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> — Map data © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
+        var Stamen_Toner =
+            L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> — Map data ©<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 20
+        });
+        var Esri_WorldImagery =L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX,GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
+        var Esri_WorldShadedRelief =
+            L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+              attribution: 'Tiles © Esri — Source: Esri',
+              maxZoom: 13
+            });
+       
+        var Stamen_TonerLines = 
+            L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lines/{z}/{x}/{y}.{ext}', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 20,
+            ext: 'png'
+        });
+        var mapaBase = {
+            'Basic': Stamen_Toner,
+            'Entorn natural': Hydda_Base,
+            'Relleu': Esri_WorldShadedRelief,
+            'Ortofoto (inici)': Esri_WorldImagery, 
+        };
+        var capas={
+            'viari':Stamen_TonerLines
+        }
+          controlCapas = L.control.layers(mapaBase, capas,{collapsed:false});
+          controlCapas.addTo(map)
+        }
+
+
+     
+      </script>
+    </head>
+
+    <body onLoad="init()">
+      <div id="map"></div>
+    </body>
+
+    </html>
